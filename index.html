@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ZenBoard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+</head>
+<body>
+    
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon" aria-hidden="true"><i class="fas fa-bars"></i></label>
+
+    <input type="checkbox" id="dark-mode-toggle" class="dark-mode-toggle" />
+
+    <div class="app-container">
+        <aside class="sidebar" role="navigation" aria-label="Main navigation">
+            <h1 class="app-title">ZenBoard</h1>
+            <nav class="nav-links">
+                <a href="#" class="nav-item active" data-view="notes"><i class="fas fa-clipboard"></i> Notes</a>
+                <a href="#" class="nav-item" data-view="tasks"><i class="fas fa-check-square"></i> Tasks</a>
+                <a href="#" class="nav-item" data-view="archive"><i class="fas fa-archive"></i> Archive</a>
+                <a href="#" class="nav-item" data-view="settings"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="nav-item" data-view="trash"><i class="fas fa-trash-alt"></i> Trash</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item" data-view="profile"><i class="fas fa-user-circle"></i> Profile</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="dynamic-user-header" id="dynamic-user-header">
+                <h2 id="user-greeting-text">Welcome to ZenBoard!</h2>
+                <p id="user-quote-text">A good day starts with a good plan.</p>
+            </header>
+
+            <section id="notes-view" class="view-section">
+                <div id="notes-grid-view" class="view-subsection">
+                    <header class="main-header">
+                        <h2>Your Notes</h2>
+                        <a href="#" class="add-note-btn" id="open-new-note"><i class="fas fa-plus"></i> Add Note</a>
+                    </header>
+                    <div class="notes-grid" id="notes-grid">
+                    </div>
+                </div>
+
+                <div id="new-note-form" class="view-subsection" style="display: none;">
+                    <header class="main-header">
+                        <h2>Create New Note</h2>
+                        <a href="#" class="close-btn" id="close-new-note"><i class="fas fa-times"></i> Close</a>
+                    </header>
+                    <div class="note-form-area">
+                        <input id="note-title" type="text" placeholder="Note Title" class="form-input title-input" />
+                        <textarea id="note-content" placeholder="Start writing your amazing note..." class="form-input content-input"></textarea>
+                        <label for="note-reminder-time" class="form-label">Set Reminder (Optional):</label>
+                        <input id="note-reminder-time" type="datetime-local" class="form-input" />
+                        <button id="save-note" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save Note</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tasks-view" class="view-section" style="display: none;">
+                <div id="tasks-list-view" class="view-subsection">
+                    <header class="main-header">
+                        <h2>Your Tasks</h2>
+                        <a href="#" class="add-note-btn" id="open-new-task"><i class="fas fa-plus"></i> Add Task</a>
+                    </header>
+                    <div class="tasks-list" id="tasks-list">
+                        <ul id="task-items" style="list-style: none; padding-left: 0; margin-top: 15px;">
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="new-task-form" class="view-subsection" style="display: none;">
+                    <header class="main-header">
+                        <h2>Create New Task</h2>
+                        <a href="#" class="close-btn" id="close-new-task"><i class="fas fa-times"></i> Close</a>
+                    </header>
+                    <div class="note-form-area">
+                        <input id="task-desc" type="text" placeholder="Task Description" class="form-input title-input" />
+                        <label for="task-reminder-time" class="form-label">Set Reminder (Optional):</label>
+                        <input id="task-reminder-time" type="datetime-local" class="form-input" />
+                        <button id="save-task" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save Task</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="archive-view" class="view-section" style="display: none;">
+                <header class="main-header">
+                    <h2>Archived Items</h2>
+                </header>
+                <div class="notes-grid" id="archive-grid">
+                </div>
+            </section>
+
+            <section id="trash-view" class="view-section" style="display: none;">
+                <header class="main-header">
+                    <h2>Trash</h2>
+                </header>
+                <div class="notes-grid" id="trash-grid">
+                </div>
+            </section>
+
+            <section id="settings-view" class="view-section" style="display: none;">
+                <header class="main-header">
+                    <h2>Settings</h2>
+                </header>
+                <div class="settings-content">
+                    <div class="theme-switch-container">
+                        <p style="font-weight: 600; margin-bottom: 15px;">Theme & Appearance</p>
+                        <div class="theme-toggle">
+                            <label for="dark-mode-toggle" class="toggle-label" role="switch" aria-checked="false">
+                                <i class="fas fa-sun light-icon" aria-hidden="true"></i>
+                                <i class="fas fa-moon dark-icon" aria-hidden="true"></i>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="toggle-text">Dark Mode</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="profile-view" class="view-section" style="display: none;">
+                <header class="main-header">
+                    <h2>Profile</h2>
+                </header>
+                <div class="settings-content">
+                    <p style="font-weight: 600; margin-bottom: 15px;">Set Your Name</p>
+                    <div class="note-form-area">
+                        <label for="profile-name-input" class="form-label">Your Name:</label>
+                        <input id="profile-name-input" type="text" placeholder="Enter your name..." class="form-input title-input" />
+                        <button id="profile-save-btn" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save Name</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
