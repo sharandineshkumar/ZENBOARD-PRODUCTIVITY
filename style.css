@@ -20,7 +20,7 @@
 }
 
 body {
-    font-family: "Lexend", sans-serif;
+    font-family: "arial", sans-serif;
     background-color: var(--color-off-white);
     color: var(--color-text-dark);
     line-height: 1.6;
@@ -576,4 +576,5 @@ body {
 }
 .task-item-left input[type="checkbox"]:active {
     transform: scale(0.95);
+
 }
