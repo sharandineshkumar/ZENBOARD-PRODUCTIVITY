@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ZenBoard</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>www.ZenBoard.com</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+
 </head>
+
 <body>
-    
+
     <input type="checkbox" id="menu-toggle" class="menu-toggle" />
     <label for="menu-toggle" class="menu-icon" aria-hidden="true"><i class="fas fa-bars"></i></label>
 
@@ -35,8 +37,18 @@
         <main class="main-content">
 
             <header class="dynamic-user-header" id="dynamic-user-header">
-                <h2 id="user-greeting-text">Welcome to ZenBoard!</h2>
-                <p id="user-quote-text">A good day starts with a good plan.</p>
+                <div class="header-content">
+                    <div class="greeting-section">
+                        <h2 id="user-greeting-text">Welcome to ZenBoard!</h2>
+                        <p id="user-quote-text">A good day starts with a good plan.</p>
+                    </div>
+                    <div class="search-section">
+                        <div class="search-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="global-search" placeholder="Search notes & tasks..." />
+                        </div>
+                    </div>
+                </div>
             </header>
 
             <section id="notes-view" class="view-section">
@@ -56,10 +68,43 @@
                     </header>
                     <div class="note-form-area">
                         <input id="note-title" type="text" placeholder="Note Title" class="form-input title-input" />
-                        <textarea id="note-content" placeholder="Start writing your amazing note..." class="form-input content-input"></textarea>
-                        <label for="note-reminder-time" class="form-label">Set Reminder (Optional):</label>
-                        <input id="note-reminder-time" type="datetime-local" class="form-input" />
-                        <button id="save-note" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save Note</button>
+                        <textarea id="note-content" placeholder="Start writing your amazing note..."
+                            class="form-input content-input"></textarea>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Color Code:</label>
+                                <div class="color-selector">
+                                    <label class="color-option white">
+                                        <input type="radio" name="note-color" value="white" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="color-option blue">
+                                        <input type="radio" name="note-color" value="blue">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="color-option green">
+                                        <input type="radio" name="note-color" value="green">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="color-option yellow">
+                                        <input type="radio" name="note-color" value="yellow">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="color-option red">
+                                        <input type="radio" name="note-color" value="red">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="note-reminder-time" class="form-label">Set Reminder (Optional):</label>
+                                <input id="note-reminder-time" type="datetime-local" class="form-input" />
+                            </div>
+                        </div>
+
+                        <button id="save-note" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save
+                            Note</button>
                     </div>
                 </div>
             </section>
@@ -82,10 +127,12 @@
                         <a href="#" class="close-btn" id="close-new-task"><i class="fas fa-times"></i> Close</a>
                     </header>
                     <div class="note-form-area">
-                        <input id="task-desc" type="text" placeholder="Task Description" class="form-input title-input" />
+                        <input id="task-desc" type="text" placeholder="Task Description"
+                            class="form-input title-input" />
                         <label for="task-reminder-time" class="form-label">Set Reminder (Optional):</label>
                         <input id="task-reminder-time" type="datetime-local" class="form-input" />
-                        <button id="save-task" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save Task</button>
+                        <button id="save-task" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save
+                            Task</button>
                     </div>
                 </div>
             </section>
@@ -133,8 +180,10 @@
                     <p style="font-weight: 600; margin-bottom: 15px;">Set Your Name</p>
                     <div class="note-form-area">
                         <label for="profile-name-input" class="form-label">Your Name:</label>
-                        <input id="profile-name-input" type="text" placeholder="Enter your name..." class="form-input title-input" />
-                        <button id="profile-save-btn" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save Name</button>
+                        <input id="profile-name-input" type="text" placeholder="Enter your name..."
+                            class="form-input title-input" />
+                        <button id="profile-save-btn" class="add-note-btn create-btn"><i class="fas fa-save"></i> Save
+                            Name</button>
                     </div>
                 </div>
             </section>
@@ -144,4 +193,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
