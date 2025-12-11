@@ -42,14 +42,6 @@ Font Awesome: For the UI icons.
 
 Google Fonts: Using the "Lexend" font family for a clean, modern look.
 
-📂 Project Structure
-
-ZenBoard/
-├── index.html      # Main HTML structure
-├── style.css       # All styling, themes, and responsive design
-└── script.js       # App logic, storage handling, and UI interactions
-
-
 
 🚀 How to Run
 
@@ -79,16 +71,8 @@ Restore: Moves item back from Archive/Trash to its original list.
 
 🔮 Future Improvements
 
-$$$$
-
  Drag and drop reordering for notes.
-
-$$$$
-
  Rich text editing (Bold, Italic, Lists).
-
-$$$$
-
  Export data to JSON/PDF.
 
 📄 License
