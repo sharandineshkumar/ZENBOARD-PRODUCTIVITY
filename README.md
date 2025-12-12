@@ -33,25 +33,18 @@ Local Storage Persistence: All data is saved instantly to your browser's Local S
 🛠️ Technologies Used
 
 HTML5: Semantic structure.
-
 CSS3: Custom properties (variables) for theming, Flexbox/Grid for layout, and media queries for responsiveness.
-
 JavaScript (ES6+): DOM manipulation, Event handling, and LocalStorage logic.
-
 Font Awesome: For the UI icons.
-
 Google Fonts: Using the "Lexend" font family for a clean, modern look.
 
 
 🚀 How to Run
 
-Since ZenBoard is a client-side application built with vanilla web technologies, you don't need to install any dependencies or node modules.
-
-Clone or Download this repository.
-
-Navigate to the project folder.
-
-Open the index.html file in any modern web browser (Chrome, Firefox, Edge, Safari).
+* Since ZenBoard is a client-side application built with vanilla web technologies, you don't need to install any dependencies or node modules.
+* Clone or Download this repository.
+* Navigate to the project folder.
+* Open the index.html file in any modern web browser (Chrome, Firefox, Edge, Safari).
 
 📖 Usage Guide
 
