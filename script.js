@@ -1,17 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    
     const allViews = document.querySelectorAll('.view-section');
     const navItems = document.querySelectorAll('.nav-item');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-    
     const notesGrid = document.getElementById('notes-grid');
     const taskList = document.getElementById('task-items');
     const archiveGrid = document.getElementById('archive-grid');
     const trashGrid = document.getElementById('trash-grid');
 
-    
     const openNewNoteBtn = document.getElementById('open-new-note');
     const closeNewNoteBtn = document.getElementById('close-new-note');
     const saveNoteBtn = document.getElementById('save-note');
@@ -21,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const noteContentInput = document.getElementById('note-content');
     const noteReminderInput = document.getElementById('note-reminder-time');
 
-    
     const openNewTaskBtn = document.getElementById('open-new-task');
     const closeNewTaskBtn = document.getElementById('close-new-task');
     const saveTaskBtn = document.getElementById('save-task');
@@ -30,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskDescInput = document.getElementById('task-desc');
     const taskReminderInput = document.getElementById('task-reminder-time');
 
-    
     const profileSaveBtn = document.getElementById('profile-save-btn');
     const profileNameInput = document.getElementById('profile-name-input');
     const greetingText = document.getElementById('user-greeting-text');
     const quoteText = document.getElementById('user-quote-text');
 
-    
+    const searchInput = document.getElementById('global-search');
+
     const getStore = (key) => {
         return JSON.parse(localStorage.getItem(key) || '[]');
     };
@@ -44,21 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(key, JSON.stringify(data));
     };
 
-    
-    
-    
-    
     const showView = (viewName) => {
-        
         allViews.forEach(view => view.style.display = 'none');
-        
         
         const viewToShow = document.getElementById(viewName + '-view');
         if (viewToShow) {
             viewToShow.style.display = 'block';
         }
 
-        
         navItems.forEach(item => {
             if (item.dataset.view === viewName) {
                 item.classList.add('active');
@@ -67,12 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        
         showList('notes');
         showList('tasks');
     };
 
-    
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault(); 
@@ -83,10 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    
-    
-    
-    
     const showForm = (type) => {
         if (type === 'notes') {
             noteList.style.display = 'none';
@@ -107,43 +90,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    
     openNewNoteBtn.addEventListener('click', (e) => { e.preventDefault(); showForm('notes'); });
     closeNewNoteBtn.addEventListener('click', (e) => { e.preventDefault(); showList('notes'); });
     openNewTaskBtn.addEventListener('click', (e) => { e.preventDefault(); showForm('tasks'); });
     closeNewTaskBtn.addEventListener('click', (e) => { e.preventDefault(); showList('tasks'); });
 
-    
-    
-    
-    
-    
-    const renderAll = () => {
-        
+    const renderAll = (filter = '') => {
+        const term = filter.toLowerCase();
+
         notesGrid.innerHTML = '';
         taskList.innerHTML = '';
         archiveGrid.innerHTML = '';
         trashGrid.innerHTML = '';
 
-        
         const notes = getStore('zenboard_notes');
         const tasks = getStore('zenboard_tasks');
         const archive = getStore('zenboard_archive');
         const trash = getStore('zenboard_trash');
 
-        
-        notes.forEach(note => createCard(note, notesGrid));
-        tasks.forEach(task => createCard(task, taskList));
-        archive.forEach(item => createCard(item, archiveGrid));
-        trash.forEach(item => createCard(item, trashGrid));
+        const filteredNotes = notes.filter(n => 
+            (n.title && n.title.toLowerCase().includes(term)) || 
+            (n.content && n.content.toLowerCase().includes(term))
+        );
+
+        const filteredTasks = tasks.filter(t => 
+            (t.text && t.text.toLowerCase().includes(term))
+        );
+
+        const filteredArchive = archive.filter(i => 
+            (i.title && i.title.toLowerCase().includes(term)) || 
+            (i.content && i.content.toLowerCase().includes(term)) ||
+            (i.text && i.text.toLowerCase().includes(term))
+        );
+
+        filteredNotes.forEach(note => createCard(note, notesGrid));
+        filteredTasks.forEach(task => createCard(task, taskList));
+        filteredArchive.forEach(item => createCard(item, archiveGrid));
+        trash.forEach(item => createCard(item, trashGrid)); 
     };
 
-    
     const createCard = (item, container) => {
         if (item.type === 'note') {
-            
             const article = document.createElement('article');
-            article.className = `note-card ${item.color || ''}`;
+            const colorClass = item.colorCode || 'white'; 
+            article.className = `note-card ${colorClass}`;
             article.dataset.id = item.id;
             article.dataset.type = 'note';
             
@@ -170,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
             container.prepend(article);
         } 
         else if (item.type === 'task') {
-            
             const li = document.createElement('li');
             li.className = 'task-item';
             li.dataset.id = item.id;
@@ -205,21 +194,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    
-    
-    
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value;
+        renderAll(term);
+    });
 
-    
     saveNoteBtn.addEventListener('click', () => {
         const title = noteTitleInput.value.trim();
         const content = noteContentInput.value.trim();
         if (!title && !content) return alert('Please enter a title or content.');
         
+        const selectedColor = document.querySelector('input[name="note-color"]:checked').value;
+
         const note = {
             id: Date.now(),
             type: 'note',
-            title, content,
-            color: title.toLowerCase().includes('goal') ? 'green' : '',
+            title, 
+            content,
+            colorCode: selectedColor, 
             createdAt: Date.now(),
             reminder: noteReminderInput.value || null,
             reminderFired: false
@@ -232,12 +224,12 @@ document.addEventListener('DOMContentLoaded', () => {
         noteTitleInput.value = '';
         noteContentInput.value = '';
         noteReminderInput.value = '';
+        document.querySelector('input[name="note-color"][value="white"]').checked = true;
         
         renderAll();
         showList('notes');
     });
 
-    
     saveTaskBtn.addEventListener('click', () => {
         const text = taskDescInput.value.trim();
         if (!text) return alert('Please enter a task description.');
@@ -263,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showList('tasks');
     });
 
-    
     document.querySelector('.main-content').addEventListener('click', (e) => {
         const target = e.target;
         const card = target.closest('[data-id]');
@@ -272,19 +263,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = Number(card.dataset.id);
         const type = card.dataset.type; 
 
-        
         if (target.classList.contains('task-checkbox')) {
             const tasks = getStore('zenboard_tasks');
             const updatedTasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
             setStore('zenboard_tasks', updatedTasks);
-            renderAll();
+            renderAll(searchInput.value); 
             return; 
         }
 
-        
         if (!target.classList.contains('card-action-btn')) return;
 
-        
         const sourceKey = `zenboard_${type}s`; 
         const archiveKey = 'zenboard_archive';
         const trashKey = 'zenboard_trash';
@@ -293,29 +281,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let sourceList;
 
         if (target.classList.contains('archive') || target.classList.contains('delete')) {
-            
             sourceList = getStore(sourceKey);
             item = sourceList.find(i => i.id === id);
             setStore(sourceKey, sourceList.filter(i => i.id !== id));
         }
         else if (target.classList.contains('unarchive') || target.classList.contains('restore')) {
-             
-            const source = target.classList.contains('unarchive') ? archiveKey : trashKey;
+             const source = target.classList.contains('unarchive') ? archiveKey : trashKey;
             sourceList = getStore(source);
             item = sourceList.find(i => i.id === id);
             setStore(source, sourceList.filter(i => i.id !== id));
         }
         else if (target.classList.contains('perm-delete')) {
-            
             const trash = getStore(trashKey);
             setStore(trashKey, trash.filter(i => i.id !== id));
-            renderAll();
+            renderAll(searchInput.value);
             return;
         }
 
         if (!item) return; 
 
-        
         if (target.classList.contains('archive')) {
             const archive = getStore(archiveKey);
             archive.push(item);
@@ -332,12 +316,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setStore(sourceKey, dest);
         }
 
-        renderAll();
+        renderAll(searchInput.value);
     });
 
-    
-    
-    
     const quotes = [
         "A good day starts with a good plan.",
         "The secret of getting ahead is getting started.",
@@ -372,9 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    
-    
-    
     const checkReminders = () => {
         const now = new Date();
         const allStores = [
@@ -388,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (item.reminder && !item.reminderFired) {
                     const reminderTime = new Date(item.reminder);
                     if (now >= reminderTime) {
-                        alert(`ðŸ”” REMINDER ðŸ””\n\n${item.title || item.text}`);
+                        alert(`🔔 REMINDER 🔔\n\n${item.title || item.text}`);
                         storeUpdated = true;
                         return { ...item, reminderFired: true }; 
                     }
@@ -398,13 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (storeUpdated) {
                 setStore(store.key, updatedItems);
-                renderAll(); 
+                renderAll(searchInput.value); 
             }
         });
     };
     setInterval(checkReminders, 30000); 
 
-    
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const dt = new Date(dateString);
@@ -413,7 +390,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    
     const applyThemeFromStorage = () => {
         const dark = localStorage.getItem('zenboard_dark') === '1';
         darkModeToggle.checked = dark;
@@ -426,9 +402,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.setAttribute('data-theme', checked ? 'dark' : 'light');
     });
 
-    
-    
-    
     applyThemeFromStorage();
     loadProfile();
     renderAll();
