@@ -20,12 +20,11 @@
 }
 
 body {
-    font-family: "arial", sans-serif;
+    font-family: "Lexend", sans-serif;
     background-color: var(--color-off-white);
     color: var(--color-text-dark);
     line-height: 1.6;
     overflow-x: hidden;
-    
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -115,6 +114,14 @@ body {
     box-shadow: var(--shadow-subtle);
 }
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 #user-greeting-text {
     font-size: 1.6rem;
     font-weight: 600;
@@ -127,6 +134,43 @@ body {
     color: var(--color-text-light);
     margin-top: 5px;
     font-style: italic;
+}
+
+.search-section {
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-light);
+}
+
+#global-search {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 30px;
+    background-color: var(--color-off-white);
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.95rem;
+    color: var(--color-text-dark);
+    transition: all 0.2s ease;
+}
+
+#global-search:focus {
+    outline: none;
+    border-color: var(--color-primary-green);
+    background-color: var(--color-card-bg);
+    box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.1);
 }
 
 .main-header {
@@ -190,19 +234,36 @@ body {
     border-radius: var(--border-radius);
     border: 1px solid var(--color-border-subtle);
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s, border-color 0.3s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     min-height: 150px; 
+    border-left: 4px solid transparent;
 }
 
-.note-card.green {
-    background-color: var(--color-card-green);
-    border: 1px solid color-mix(in srgb, var(--color-primary-green) 20%, transparent);
+.note-card.white {
+    border-left-color: #ccc;
+    background-color: var(--color-card-bg);
 }
-.note-card.gray {
-    background-color: var(--color-card-gray);
-    border: 1px solid color-mix(in srgb, var(--color-text-light) 20%, transparent);
+.note-card.blue {
+    background-color: #e3f2fd;
+    border-left-color: #2196f3;
+    border-color: #bbdefb;
+}
+.note-card.green {
+    background-color: #e8f5e9;
+    border-left-color: #4caf50;
+    border-color: #c8e6c9;
+}
+.note-card.yellow {
+    background-color: #fff9c4;
+    border-left-color: #fbc02d;
+    border-color: #fff59d;
+}
+.note-card.red {
+    background-color: #ffebee;
+    border-left-color: #f44336;
+    border-color: #ffcdd2;
 }
 
 .note-card:hover {
@@ -239,6 +300,58 @@ body {
     flex-direction: column;
     gap: 15px;
     border: 1px solid var(--color-border-subtle);
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.color-selector {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.color-option {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    display: inline-block;
+}
+
+.color-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.color-option .checkmark {
+    position: absolute;
+    top: 0; left: 0;
+    height: 30px; width: 30px;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.color-option.white { background-color: #ffffff; }
+.color-option.blue { background-color: #bbdefb; }
+.color-option.green { background-color: #c8e6c9; }
+.color-option.yellow { background-color: #fff9c4; }
+.color-option.red { background-color: #ffcdd2; }
+
+.color-option input:checked ~ .checkmark {
+    border: 2px solid #555;
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .form-input {
@@ -348,13 +461,17 @@ body {
     --color-text-light: #b0b0b0; 
     --color-border-subtle: #3a3a3a; 
     --color-card-bg: #323232; 
-    --color-card-green: #3e483e; 
-    --color-card-gray: #3a3a3a; 
     --shadow-subtle: 0 4px 8px rgba(0, 0, 0, 0.4); 
 
     background-color: var(--color-off-white);
     color: var(--color-text-dark);
 }
+
+.dark-mode-toggle:checked ~ .app-container .note-card.blue { background-color: #1a334a; border-color: #1e4b75; }
+.dark-mode-toggle:checked ~ .app-container .note-card.green { background-color: #1b3a21; border-color: #255d31; }
+.dark-mode-toggle:checked ~ .app-container .note-card.yellow { background-color: #3a361b; border-color: #5d5520; }
+.dark-mode-toggle:checked ~ .app-container .note-card.red { background-color: #3a1b1b; border-color: #5d2020; }
+.dark-mode-toggle:checked ~ .app-container .note-card.white { background-color: #323232; border-color: #444; }
 
 .dark-mode-toggle:checked ~ .app-container .toggle-label .slider {
     background-color: var(--color-primary-green); 
@@ -372,24 +489,23 @@ body {
     opacity: 1; 
 }
 
-/* Explicitly apply dark mode colors to specific elements */
 .dark-mode-toggle:checked ~ .app-container .settings-content,
 .dark-mode-toggle:checked ~ .app-container #tasks-view #tasks-list {
     background-color: var(--color-card-bg) !important;
     border-color: var(--color-border-subtle) !important;
 }
-
-
-/* -------------------------------------------
-   --- RESPONSIVENESS & MOBILE MENU TOGGLE --- 
-   ------------------------------------------- */
+.dark-mode-toggle:checked ~ .app-container #global-search {
+    background-color: #252525;
+    border-color: #444;
+    color: #fff;
+}
 
 .menu-toggle {
     display: none; 
 }
 
 .menu-icon {
-    display: none; /* Hidden on desktop */
+    display: none;
     position: fixed;
     top: 20px;
     left: 20px;
@@ -429,6 +545,14 @@ body {
     }
     .main-content {
         padding: 20px;
+    }
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .search-section {
+        max-width: 100%;
+        width: 100%;
     }
     .main-header {
         flex-direction: column;
@@ -494,6 +618,18 @@ body {
 .card-action-btn:hover {
     background-color: var(--color-border-subtle);
     border-color: var(--color-text-light);
+}
+
+.card-action-btn.archive,
+.card-action-btn.unarchive {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border-color: #90caf9;
+}
+.card-action-btn.archive:hover,
+.card-action-btn.unarchive:hover {
+    background-color: #bbdefb;
+    color: #0d47a1;
 }
 
 .card-action-btn.restore {
@@ -576,5 +712,4 @@ body {
 }
 .task-item-left input[type="checkbox"]:active {
     transform: scale(0.95);
-
 }
