@@ -68,6 +68,4 @@ Restore: Moves item back from Archive/Trash to its original list.
  Rich text editing (Bold, Italic, Lists).
  Export data to JSON/PDF.
 
-📄 License
 
-This project is open source and available for personal and educational use.
